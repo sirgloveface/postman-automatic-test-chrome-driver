@@ -1,0 +1,24 @@
+{
+  "name": "postman-automatic-test-chrome-driver",
+  "version": "1.0.0",
+  "description": "Project to make automatic test e2e.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirgloveface/postman-automatic-test-chrome-driver.git"
+  },
+  "author": "Tony Garcia <sir.glovefa@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sirgloveface/postman-automatic-test-chrome-driver/issues"
+  },
+  "homepage": "https://github.com/sirgloveface/postman-automatic-test-chrome-driver#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "newman": "^4.6.0"
+  }
+}

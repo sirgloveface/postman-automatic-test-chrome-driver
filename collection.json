@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "ec6d9cb9-0675-46dd-84e4-180f3486cb31",
+		"name": "QuickpayCredit Linio ApisCl Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "qa",
+			"item": [
+				{
+					"name": "Crear Token de Acceso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "59a5d8d0-a843-40cb-8712-c0c091e39a5d",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"llave_acceso\", jsonData.access_token);",
+									"",
+									"pm.test(\"Token Exitoso\", function () {",
+									"  pm.expect(jsonData.token_type).to.eql(\"Bearer\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{clientid}}:{{clientsecret}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"grant_type\" : \"client_credentials\"\n}"
+						},
+						"url": {
+							"raw": "https://api.qa.peinau.fif.tech/sso/oauth2/v2/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"qa",
+								"peinau",
+								"fif",
+								"tech"
+							],
+							"path": [
+								"sso",
+								"oauth2",
+								"v2",
+								"token"
+							]
+						},
+						"description": "Primer Paso Flujo"
+					},
+					"response": []
+				},
+				{
+					"name": "Intención de Captura",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "55bdc07b-ca7c-4661-9752-fde9c33aed7d",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token_intencion_captura\", jsonData.id);",
+									"",
+									"pm.test(\"Intencion Creada\", function () {",
+									"  pm.expect(jsonData.state).to.eql(\"created\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{llave_acceso}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"capture\": \"CMR_CAPTURE\",\n  \"capture_method\": \"TOKENIZATION\",\n  \"cardholder\": {\n    \"reference_id\": \"123456\",\n    \"country\": \"CL\",\n    \"name\": \"Alejandro Rivero\",\n    \"email\": \"JLPrueba1@gmail.com\"\n  },\n  \"billing\": {\n    \"line1\": \"Miraflores 222\",\n    \"city\": \"Santiago\",\n    \"state\": \"Region Metropolitana\",\n    \"country\": \"CL\"\n  },\n  \"redirect_urls\": {\n    \"return_url\": \"https://www.falabella.com\",\n    \"cancel_url\": \"https://www.google.com\"\n  },\n  \"additional_attributes\": {\n  \t\"remember_capture\": false\n  }\n}"
+						},
+						"url": {
+							"raw": "https://api.qa.peinau.fif.tech/tokenization/captures",
+							"protocol": "https",
+							"host": [
+								"api",
+								"qa",
+								"peinau",
+								"fif",
+								"tech"
+							],
+							"path": [
+								"tokenization",
+								"captures"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tokenizar CMR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ecab558-abad-4976-b8cd-5d0969e69bf4",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"dato\", jsonData.gateway.documentId);",
+									"",
+									"pm.test(\"Intencion Capturada\", function () {",
+									"  pm.expect(jsonData.state).to.eql(\"captured\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{llave_acceso}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"user\": {\n   \"country\": \"CL\",\n   \"documentType\": \"RUT\",\n   \"documentId\": \"159299740\"\n },\n \"panNumber\": \"4653751039994165\"\n}"
+						},
+						"url": {
+							"raw": "https://api.qa.peinau.fif.tech/tokenization/captures/gateways/cmr/capture/{{token_intencion_captura}}/capture",
+							"protocol": "https",
+							"host": [
+								"api",
+								"qa",
+								"peinau",
+								"fif",
+								"tech"
+							],
+							"path": [
+								"tokenization",
+								"captures",
+								"gateways",
+								"cmr",
+								"capture",
+								"{{token_intencion_captura}}",
+								"capture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QP Credit Intención de Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "15e0141d-6364-4552-ae6e-bb113fcf4721",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token_intencion\", jsonData.id);",
+									"",
+									"var linkpay = jsonData.links[\"1\"].href;",
+									"",
+									"var amounttotal = jsonData.transaction.amount.total;",
+									"",
+									"var pagoMethod = jsonData.payer.payment_method;",
+									"",
+									"var dato = jsonData.payer.payer_info.document_number;",
+									"",
+									"var schema = {",
+									"   \"items\" : {",
+									"       \"type\": \"object\",",
+									"               \"properties\": {",
+									"                   \"long_transaction_code\" : {",
+									"                   \"type\":\"string\"",
+									"                    },",
+									"                    \"short_transaction_code\" : {",
+									"                   \"type\":\"string\"",
+									"                    },",
+									"                    \"payer\": {",
+									"                         \"type\": \"object\",",
+									"                         \"properties\" : {",
+									"                       \"document_type\": {",
+									"                           \"type\":\"string\"",
+									"                    }",
+									"                         }",
+									"                    },",
+									"                    \"transaction\": {",
+									"                         \"type\": \"object\",",
+									"                         \"properties\" : {",
+									"                       \"merchant_unique_id\": {",
+									"                           \"type\":\"string\"",
+									"                    },",
+									"                       \"amount\": {",
+									"                           \"type\": \"object\",",
+									"                         \"properties\" : {",
+									"                           \"details\": {",
+									"                               \"type\": \"object\",",
+									"                         \"properties\" : {",
+									"                               \"subtotal\": {",
+									"                              \"type\":\"integer\"",
+									"                               },",
+									"                           },",
+									"                       },",
+									"",
+									"                             \"total\": {",
+									"                                 \"type\":\"integer\"",
+									"                             },",
+									"                         }",
+									"                         },",
+									"",
+									"                    \"_id\": {",
+									"                           \"type\":\"string\"",
+									"",
+									"                    }",
+									"                         }",
+									"                    },",
+									"                    \"state\": {",
+									"                        \"type\":\"string\"",
+									"               }",
+									"                   }",
+									"   }",
+									"};",
+									"",
+									"",
+									"",
+									"//tests[\"Schema validado OK1\"] = tv4.validate([jsonData], schema);",
+									"",
+									"pm.test(\"Schema validado OK\", function () {",
+									"   pm.expect(tv4.validate([jsonData], schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"   pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code is 201\", function() {",
+									"   pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Body contains token_ID: \" + jsonData.id, function () {",
+									"   responseBody.has(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Status is created\", function () {",
+									"   var jsonData = pm.response.json();",
+									"   pm.expect(jsonData.state).to.eql(\"created\");",
+									"});",
+									"",
+									"pm.test(\"Body matches linkPay: \" + linkpay, function () {",
+									"   pm.expect(pm.response.text()).to.include(\"pay\");",
+									"});",
+									"",
+									"pm.environment.set(\"token_intencion\", jsonData.id);",
+									"",
+									"pm.environment.set(\"url\", linkpay);",
+									"",
+									"pm.environment.set(\"pesos\", amounttotal);",
+									"",
+									"pm.test(\"state del Json Created\", function () {",
+									"  pm.expect(jsonData.state).to.eql(\"created\");",
+									"});",
+									"",
+									"pm.test(\"Metodo de pago \" + pagoMethod, function () {",
+									" });",
+									" ",
+									" pm.test(\"Dato: \" + dato, function () {",
+									" });",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{llave_acceso}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \n   \"payer\":{  \n      \"payer_info\":{  \n         \"email\":\"dummy@gmail.com\",\n         \"full_name\":\"Alejandro Rivero\",\n         \"country\":\"CL\",\n         \"document_number\":\"159299740\",\n         \"document_type\":\"RUT\",\n         \"is_guest\": \"true\"\n      },\n      \"payment_method\":\"QUICKPAY_CREDIT\"\n   },\n   \"transaction\":{\n      \"reference_id\":null,\n      \"description\":\"Transaction in app 789156083925170982900platform  QPAY id 0dfbb32c-2234-46e5-9e92-561511c00623\",\n      \"soft_descriptor\":\"id 0dfbb32c-2234-46e5-9e92-561511c00623\",\n      \"amount\":{  \n         \"currency\":\"CLP\",\n         \"total\":1010,\n         \"details\":{  \n            \"subtotal\":1010,\n            \"tax\":0,\n            \"shipping\":0,\n            \"shipping_discount\":0\n         }\n      },\n      \"item_list\":{  \n         \"shipping_address\":{  \n            \"line1\":\"Av. Las Condes 11049, Las Condes\",\n            \"city\":\"Chile\",\n            \"country_code\":\"CL\",\n            \"phone\":\"+56956821215\",\n            \"type\":\"HOME_OR_WORK\",\n            \"recipient_name\":\"Alejandro Rivero \"\n         },\n         \"shipping_method\":\"PICK_IN_PLACE\",\n         \"items\":[  \n            {  \n               \"sku\":\"117110\",\n               \"name\":\"Cordu00f3n 3x1 mm 10 m metro lineal Negro\",\n               \"description\":\"Cordu00f3n 3x1 mm 10 m metro lineal Negro\",\n               \"quantity\":1,\n               \"price\":7200,\n               \"tax\":0\n            }\n         ]\n      }\n   },\n   \"redirect_urls\":{  \n      \"return_url\":\"https://www.falabella.com\",\n      \"cancel_url\":\"https://www.google.com\"\n   },\n   \"intent\":\"sale\",\n   \"purchase_order\": {\n    \"purchase_order_id\": \"048375849305\",\n    \"purchase_order_date\": \"2018-12-03T00:00:00-05:00\"\n   },   \n   \"additional_attributes\":{  \n   \t  \"capture_token\": \"{{token_intencion_captura}}\",\n      \"installments_offer\":[  \n         \"1\",\n         \"2\",\n         \"3\",\n         \"4\"\n      ],\n      \"installments_without_interest\":[  \n         \"2\"\n      ],\n      \"default_installment_number\":\"1\",\n      \"default_deferred_month\":\"0\",\n      \"is_deferred_capture\":\"false\"\n   }\n}"
+						},
+						"url": {
+							"raw": "https://api.qa.peinau.fif.tech/checkout/payments",
+							"protocol": "https",
+							"host": [
+								"api",
+								"qa",
+								"peinau",
+								"fif",
+								"tech"
+							],
+							"path": [
+								"checkout",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revision de Orden Pago",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcmltYXJ5c2lkIjoiNWI0NTIzNWI5Yzk4ZmMwZmJkZmZhZGJkIiwidW5pcXVlX25hbWUiOiJEZW1vIiwiZ3JvdXBzaWQiOiJBUFBMIiwiaXNzIjoiU2luZ2xlU2lnbk9uIiwiYXVkIjoiU2VydmVyIiwidHlwZSI6IkFwaUtleSIsInNjb3BlcyI6WyJwcm9maWxlIl0sImlhdCI6MTUzMjAyNjE1NSwiZXhwIjoxNTk1MTQxMzU1fQ.ZLi8V4PNkr0uFtsVfXQndIm0s4p9Y9pIBbVa9UYkYeLRgtvnXMAKkyfm2w6zsqrddEAzas5vcFKLMM6tNI1F_tHCHy8T5J00kh-6Y_J8JeJOUEiNeOIKt_qmI9RIdtiMInxj7oFmNTmJ2hv1wOnGvAYK54Jb3imoJThKcSt_paL7PbM3_rzPkUs1SJA7DfobXueoo79rGWAc3StfK7xoexo_StN0vJZOHP_vtLM8MJaNqu3vGYb-VLoOxtd5ScEjrz2oDjvyuyw7inSUw48-EkSyDw0QsckcVfmQecbgoUq_zTltyun8A9vrjYAZ1RLq156WYBiqKxoUNq6cflyf6g",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{llave_acceso}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.qa.peinau.fif.tech/checkout/payments/{{token_intencion}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"qa",
+								"peinau",
+								"fif",
+								"tech"
+							],
+							"path": [
+								"checkout",
+								"payments",
+								"{{token_intencion}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refund Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{llave_acceso}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"refunded_amount\":500\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.qa.peinau.fif.tech/checkout/payments/gateways/quickpay/credit/{{token_intencion}}/refund",
+							"protocol": "https",
+							"host": [
+								"api",
+								"qa",
+								"peinau",
+								"fif",
+								"tech"
+							],
+							"path": [
+								"checkout",
+								"payments",
+								"gateways",
+								"quickpay",
+								"credit",
+								"{{token_intencion}}",
+								"refund"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6b2e51cb-827e-4c2b-a4c2-d65a370b1651",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6503a721-a79e-4f49-bdd6-2925b8d807f3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": []
+}

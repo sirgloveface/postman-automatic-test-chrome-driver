@@ -1,0 +1,224 @@
+{
+	"id": "1c1a8cce-955a-42f1-8b73-3b256a7f1930",
+	"name": "Ambiente CL",
+	"values": [
+		{
+			"key": "clientid",
+			"value": "173606131558122611819",
+			"enabled": true
+		},
+		{
+			"key": "clientsecret",
+			"value": "z85yG2ynsMD_dPQv4JXYcFANyyIuwxqm1RwF6w3aQ6l6",
+			"enabled": true
+		},
+		{
+			"key": "llave_acceso",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcmltYXJ5c2lkIjoiNWRmMjdkMGE3NzlhYTMwMDE2NTU2ZjAxIiwidW5pcXVlX25hbWUiOiJoYWNldMOpIGNhcmdvIGNoZSEiLCJncm91cHNpZCI6IkFQUEwiLCJpc3MiOiJGYWxhYmVsbGEiLCJhdWQiOiJXZWIiLCJ0eXBlIjoiQmVhcmVyIiwic2NvcGUiOltdLCJpYXQiOjE1ODM1MDEyODksImV4cCI6MTU4MzUwMTg4OX0.StMQLupVhKOZKEB8S5yrbnKhDAW-Iife08fH7tTOtHrwL-KOYQXf22o1sJeYunmb64rmiIAmxM26nMWsjGvPW6OOtXh3P5QJTr-P-pXOhQwpzS2CwlyddfCtm_Uqk2CEq7UyTaPdnejcMyQv0rBOpUe7FZkVyRS9F4yNF3X4FcAzXbOEu9Mv2tAUFeS2inB_ke1unNDuSW0xsrvoE17eIpp6jY5PxXqA-H0auq-PwqkACP0D561GNZHcX6sybedmyYga6wSmEfENC_xP5VoVRehEKq51xA3MmuIAUmtwa1rKSytobvENIutQRpzWfVHYG_ZG7QC3PURgtIvcWkNADQ",
+			"enabled": true
+		},
+		{
+			"key": "pesos",
+			"value": 1010,
+			"enabled": true
+		},
+		{
+			"key": "token_intencion",
+			"value": "5e615f04f36e5a7a71d3b2b1",
+			"enabled": true
+		},
+		{
+			"key": "url",
+			"value": "http://localhost:8081/payments/gateways/quickpay/credit/5e615f04f36e5a7a71d3b2b1/pay",
+			"enabled": true
+		},
+		{
+			"key": "sessionid",
+			"value": "a31b0f1fe13409f4e2845c3b967cca80",
+			"enabled": true
+		},
+		{
+			"key": "password",
+			"value": "0.6782247569745445-1",
+			"enabled": true
+		},
+		{
+			"key": "btnContinuar",
+			"value": null,
+			"enabled": true
+		},
+		{
+			"key": "btnContinuarPesos",
+			"value": null,
+			"enabled": true
+		},
+		{
+			"key": "digitarOtp",
+			"value": "0.1688544033516448-4",
+			"enabled": true
+		},
+		{
+			"key": "otp",
+			"value": "470450",
+			"enabled": true
+		},
+		{
+			"key": "btnCanjear",
+			"value": "0.1688544033516448-5",
+			"enabled": true
+		},
+		{
+			"key": "muid",
+			"value": "c7afa1a7-19ba-467a-9ad0-a1e6520f276c",
+			"enabled": true
+		},
+		{
+			"key": "token_intencion_captura",
+			"value": "993269aa-4e4b-44c8-ad61-d5852bfd58c4",
+			"enabled": true
+		},
+		{
+			"key": "dato",
+			"value": "159299740",
+			"enabled": true
+		},
+		{
+			"key": "rut",
+			"value": "13670964K",
+			"enabled": true
+		},
+		{
+			"key": "deferred",
+			"value": "false",
+			"enabled": true
+		},
+		{
+			"key": "authorized",
+			"value": "true",
+			"enabled": true
+		},
+		{
+			"key": "usuario",
+			"value": "0.7794016596328392-1",
+			"enabled": true
+		},
+		{
+			"key": "passwordbo",
+			"value": "0.7794016596328392-3",
+			"enabled": true
+		},
+		{
+			"key": "ingresar",
+			"value": "0.7794016596328392-4",
+			"enabled": true
+		},
+		{
+			"key": "reporte",
+			"value": "0.7794016596328392-10",
+			"enabled": true
+		},
+		{
+			"key": "transacciones",
+			"value": "0.7794016596328392-14",
+			"enabled": true
+		},
+		{
+			"key": "idTRansaccion",
+			"value": "0.6045452267324551-38",
+			"enabled": true
+		},
+		{
+			"key": "buscar",
+			"value": "0.7794016596328392-22",
+			"enabled": true
+		},
+		{
+			"key": "id",
+			"value": "IP-15827406147511741",
+			"enabled": true
+		},
+		{
+			"key": "idTransaccion",
+			"value": "0.7794016596328392-21",
+			"enabled": true
+		},
+		{
+			"key": "salir",
+			"value": "0.7794016596328392-26",
+			"enabled": true
+		},
+		{
+			"key": "timestampUtcIso8601",
+			"value": "2019/10/21 11:10:08",
+			"enabled": true
+		},
+		{
+			"key": "CurrentDatetime",
+			"value": "2019/11/27 09:11:52",
+			"enabled": true
+		},
+		{
+			"key": "authorization_code",
+			"value": "168817751436",
+			"enabled": true
+		},
+		{
+			"key": "Phone",
+			"value": null,
+			"enabled": true
+		},
+		{
+			"key": "Rut",
+			"value": null,
+			"enabled": true
+		},
+		{
+			"key": "Total",
+			"value": null,
+			"enabled": true
+		},
+		{
+			"key": "sessionidfirefox,",
+			"value": "24a90205-dada-4367-9577-5f9761104d28",
+			"enabled": true
+		},
+		{
+			"key": "payments_intencion_captura",
+			"value": "35dcab85-0a09-4e30-9c25-17f5a830a0e5",
+			"enabled": true
+		},
+		{
+			"key": "qr_code_plain",
+			"value": "00020101021245830023com.falabellafif.wallet01245de001f138185c001662088d02245d5ea117eb56a4002b34a94e52045999530315254073000.005502005802CL5909Falabella6008Santiago62140303101070310163045A9E",
+			"enabled": true
+		},
+		{
+			"key": "idIntention",
+			"value": null,
+			"enabled": true
+		},
+		{
+			"key": "unique_id",
+			"value": "62412899663030",
+			"enabled": true
+		},
+		{
+			"key": "RUT",
+			"value": null,
+			"enabled": true
+		},
+		{
+			"key": "ids",
+			"value": "0.7794016596328392-25",
+			"enabled": true
+		},
+		{
+			"key": "url-real",
+			"value": "http://localhost:8081",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-03-06T15:43:47.781Z",
+	"_postman_exported_using": "Postman/7.19.1"
+}
